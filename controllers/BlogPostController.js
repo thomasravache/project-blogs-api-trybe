@@ -25,8 +25,21 @@ const getAll = async (_req, res) => {
   return res.status(200).json(posts);
 };
 
+const getById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const post = await BlogPostService.getById(id);
+
+    return res.status(200).json(post);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 /* ROUTES */
 blogPostRouter.post('/', create);
 blogPostRouter.get('/', getAll);
+blogPostRouter.get('/:id', getById);
 
 module.exports = blogPostRouter;
