@@ -19,7 +19,14 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAll = async (_req, res) => {
+  const posts = await BlogPostService.getAll();
+
+  return res.status(200).json(posts);
+};
+
 /* ROUTES */
 blogPostRouter.post('/', create);
+blogPostRouter.get('/', getAll);
 
 module.exports = blogPostRouter;
