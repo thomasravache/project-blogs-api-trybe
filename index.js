@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { userRouter, loginRouter, categorieRouter } = require('./controllers');
+const { userRouter, loginRouter, categorieRouter, blogPostRouter } = require('./controllers');
 const { inputError, domainError, serverError } = require('./controllers/errorsHandler');
 const authentication = require('./tokenHandler/authentication');
 
@@ -13,6 +13,7 @@ app.use('/login', loginRouter);
 
 app.use(authentication);
 app.use('/categories', categorieRouter);
+app.use('/post', blogPostRouter);
 
 /* Error Handlers */
 app.use(inputError);
