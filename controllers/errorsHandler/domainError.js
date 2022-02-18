@@ -1,6 +1,7 @@
 const statusCodes = {
   'User already registered': 409,
   'Invalid fields': 400,
+  'User does not exist': 404,
 };
 
 module.exports = (err, _req, res, next) => {

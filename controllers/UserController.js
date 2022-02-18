@@ -30,8 +30,21 @@ const getAll = async (_req, res) => {
   return res.status(200).json(users);
 };
 
+const getById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const user = await UserService.getById(id);
+
+    return res.status(200).json(user);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 /* ROUTES */
 userRouter.post('/', create);
 userRouter.get('/', authentication, getAll);
+userRouter.get('/:id', authentication, getById);
 
 module.exports = userRouter;
