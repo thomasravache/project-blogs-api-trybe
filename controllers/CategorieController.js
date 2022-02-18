@@ -18,7 +18,14 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAll = async (_req, res) => {
+  const categories = await CategorieService.getAll();
+
+  return res.status(200).json(categories);
+};
+
 /* ROUTES */
 categorieRouter.post('/', create);
+categorieRouter.get('/', getAll);
 
 module.exports = categorieRouter;
