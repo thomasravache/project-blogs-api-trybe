@@ -1,25 +1,19 @@
 const express = require('express');
-const userSchema = require('./schemas/userSchema');
+const { userSchema, validate } = require('./schemas');
 const UserService = require('../services/UserService');
 
 const userRouter = express.Router();
 
-const validateUser = (body) => {
-  const { error } = userSchema.validate(body);
-
-  if (error) throw error;
-};
-
 const create = async (req, res, next) => {
-  try {
-    const {
-      displayName,
-      email,
-      password,
-      image,
-    } = req.body;
+  const {
+    displayName,
+    email,
+    password,
+    image,
+  } = req.body;
 
-    validateUser(req.body);
+  try {
+    validate(req.body, userSchema);
   
     const token = await UserService.create({ displayName, email, password, image });
   

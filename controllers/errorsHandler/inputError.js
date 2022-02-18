@@ -1,6 +1,6 @@
 module.exports = (err, _req, res, next) => {
   if (err.isJoi) {
-    console.log(err);
+    // console.log(err);
     const { details } = err;
     const { message } = details[0];
 

@@ -1,7 +1,12 @@
-const jwt = require('jsonwebtoken');
+const { generateToken } = require('../tokenHandler/tokenGenerator');
 const { User } = require('../models');
 
 const { JWT_SECRET } = process.env;
+
+const jwtOptions = {
+  expiresIn: '1h',
+  algorithm: 'HS256',
+};
 
 const create = async ({ displayName, email, password, image }) => {
   const user = await User.findOne({ where: { email } });
@@ -9,14 +14,10 @@ const create = async ({ displayName, email, password, image }) => {
   if (user !== null) throw new Error('User already registered');
 
   const { dataValues } = await User.create({ displayName, email, password, image });
-  console.log('dataValues', dataValues);
+  const newUser = dataValues;
+  // console.log('dataValues', dataValues);
 
-  const jwtOptions = {
-    expiresIn: '1h',
-    algorithm: 'HS256',
-  };
-
-  const token = jwt.sign({ sub: dataValues.displayName }, JWT_SECRET, jwtOptions);
+  const token = generateToken({ sub: newUser.email }, JWT_SECRET, jwtOptions);
 
   return token;
 };

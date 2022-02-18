@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { userRouter } = require('./controllers');
+const { userRouter, loginRouter } = require('./controllers');
 const { inputError, domainError, serverError } = require('./controllers/errorsHandler');
 
 const app = express();
@@ -8,6 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/user', userRouter);
+app.use('/login', loginRouter);
 
 /* Error Handlers */
 app.use(inputError);
