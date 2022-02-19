@@ -6,4 +6,16 @@ const blogPostSchema = Joi.object({
   content: Joi.string().not().empty().required(),
 });
 
-module.exports = blogPostSchema;
+const updateBlogPostSchema = Joi.object({
+  title: Joi.string().not().empty().required(),
+  categoryIds: Joi.any().forbidden()
+    .messages({
+      'any.unknown': 'Categories cannot be edited',
+    }),
+  content: Joi.string().not().empty().required(),
+});
+
+module.exports = {
+  blogPostSchema,
+  updateBlogPostSchema,
+};

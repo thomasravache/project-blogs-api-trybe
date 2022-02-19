@@ -1,6 +1,6 @@
 const express = require('express');
 const BlogPostService = require('../services/BlogPostService');
-const { validate, blogPostSchema } = require('./schemas');
+const { validate, blogPostSchema, updateBlogPostSchema } = require('./schemas');
 
 const blogPostRouter = express.Router();
 
@@ -37,9 +37,25 @@ const getById = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  try {
+    validate(req.body, updateBlogPostSchema);
+
+    const updatedPost = await BlogPostService.update({ currentUser: req.user, id, title, content });
+
+    return res.status(200).json(updatedPost);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 /* ROUTES */
 blogPostRouter.post('/', create);
 blogPostRouter.get('/', getAll);
 blogPostRouter.get('/:id', getById);
+blogPostRouter.put('/:id', update);
 
 module.exports = blogPostRouter;

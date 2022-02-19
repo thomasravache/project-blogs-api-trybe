@@ -4,6 +4,7 @@ const statusCodes = {
   'User does not exist': 404,
   '"categoryIds" not found': 400,
   'Post does not exist': 404,
+  'Unauthorized user': 401,
 };
 
 module.exports = (err, _req, res, next) => {

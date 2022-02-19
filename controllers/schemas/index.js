@@ -2,7 +2,7 @@ const validate = require('./validate');
 const loginSchema = require('./loginSchema');
 const userSchema = require('./userSchema');
 const categorieSchema = require('./categorieSchema');
-const blogPostSchema = require('./blogPostSchema');
+const { blogPostSchema, updateBlogPostSchema } = require('./blogPostSchema');
 
 module.exports = {
   validate,
@@ -10,4 +10,5 @@ module.exports = {
   userSchema,
   categorieSchema,
   blogPostSchema,
+  updateBlogPostSchema,
 };

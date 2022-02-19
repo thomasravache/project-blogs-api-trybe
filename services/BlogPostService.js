@@ -46,8 +46,27 @@ const getById = async (id) => {
   return post;
 };
 
+const update = async ({ currentUser, id, title, content }) => {
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user' },
+      { model: Categorie, as: 'categories' },
+    ],
+  });
+
+  console.log(post);
+
+  if (currentUser.id !== post.userId) throw new Error('Unauthorized user');
+
+  await post.update({ title, content });
+
+  return post;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
