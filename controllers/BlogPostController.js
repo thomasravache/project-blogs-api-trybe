@@ -52,10 +52,23 @@ const update = async (req, res, next) => {
   }
 };
 
+const destroy = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    await BlogPostService.destroy({ currentUser: req.user, id });
+
+    return res.status(204).end();
+  } catch (e) {
+    return next(e);
+  }
+};
+
 /* ROUTES */
 blogPostRouter.post('/', create);
 blogPostRouter.get('/', getAll);
 blogPostRouter.get('/:id', getById);
 blogPostRouter.put('/:id', update);
+blogPostRouter.delete('/:id', destroy);
 
 module.exports = blogPostRouter;

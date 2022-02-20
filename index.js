@@ -6,6 +6,7 @@ const authentication = require('./tokenHandler/authentication');
 
 const app = express();
 
+app.use(express.json());
 app.use(bodyParser.json());
 
 app.use('/user', userRouter);

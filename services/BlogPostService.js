@@ -64,9 +64,19 @@ const update = async ({ currentUser, id, title, content }) => {
   return post;
 };
 
+const destroy = async ({ currentUser, id }) => {
+  const post = await BlogPost.findOne({ where: { id } });
+
+  if (!post) throw new Error('Post does not exist');
+  if (post.userId !== currentUser.id) throw new Error('Unauthorized user');
+
+  await BlogPost.destroy({ where: { id } });
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  destroy,
 };
