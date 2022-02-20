@@ -42,9 +42,16 @@ const getById = async (req, res, next) => {
   }
 };
 
+const destroy = async (req, res) => {
+  await UserService.destroy(req.user);
+
+  return res.status(204).end();
+};
+
 /* ROUTES */
 userRouter.post('/', create);
 userRouter.get('/', authentication, getAll);
 userRouter.get('/:id', authentication, getById);
+userRouter.delete('/me', authentication, destroy);
 
 module.exports = userRouter;
