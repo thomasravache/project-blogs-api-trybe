@@ -60,7 +60,7 @@ const update = async ({ currentUser, id, title, content }) => {
 
   if (currentUser.id !== post.userId) throw new Error('Unauthorized user');
 
-  await post.update({ title, content });
+  await post.update({ title, content, updated: new Date().toString() });
 
   return post;
 };
