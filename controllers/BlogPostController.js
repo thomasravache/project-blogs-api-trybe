@@ -64,9 +64,18 @@ const destroy = async (req, res, next) => {
   }
 };
 
+const search = async (req, res) => {
+  const { q } = req.query;
+
+  const posts = await BlogPostService.search(q);
+
+  return res.status(200).json(posts);
+};
+
 /* ROUTES */
 blogPostRouter.post('/', create);
 blogPostRouter.get('/', getAll);
+blogPostRouter.get('/search', search);
 blogPostRouter.get('/:id', getById);
 blogPostRouter.put('/:id', update);
 blogPostRouter.delete('/:id', destroy);
